@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ettl Trainer - Master Edition</title>
+    <title>Ettl Trainer - Master Edition Pro</title>
     <script src="audio_data.js"></script>
     <style>
         :root { 
             --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); 
-            --glass: rgba(100, 116, 139, 0.85); 
-            --glass-border: rgba(255, 255, 255, 0.3);
+            --glass: rgba(100, 116, 139, 0.9); 
+            --glass-border: rgba(255, 255, 255, 0.4);
             --text: #ffffff;
             --tab-color: #3b82f6; 
         }
         body { font-family: 'SF Pro Display', 'Segoe UI', sans-serif; background: var(--bg-gradient); min-height: 100vh; margin: 0; display: flex; justify-content: center; align-items: center; overflow: hidden; }
         
-        .progress-container { width: 100%; height: 6px; background: rgba(0,0,0,0.2); border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
+        .progress-container { width: 100%; height: 8px; background: rgba(0,0,0,0.2); border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
         #progress-bar { width: 0%; height: 100%; background: var(--tab-color); transition: width 0.5s ease; }
 
         .card { 
@@ -24,47 +24,50 @@
             -webkit-backdrop-filter: blur(20px); 
             padding: 2.2rem; border-radius: 35px; text-align: center; 
             width: 90%; max-width: 420px; 
-            border: 1px solid var(--glass-border); 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.1); 
-            position: relative; z-index: 10; 
+            border: 2px solid var(--glass-border); 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15); 
+            position: relative; z-index: 10;
+            display: block; 
             transition: all 0.3s ease;
         }
         
-        .stats { display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 15px; color: rgba(255,255,255,0.9); font-size: 0.85rem; }
-        .streak-val { color: #f59e0b; font-weight: 800; }
+        .stats { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 15px; color: #ffffff; font-size: 0.9rem; }
+        .streak-val { color: #f59e0b; }
 
-        .mode-select { display: flex; gap: 8px; margin-bottom: 25px; background: rgba(0,0,0,0.15); padding: 6px; border-radius: 18px; }
-        .mode-btn { flex: 1; font-size: 0.7rem; padding: 12px; border: none; cursor: pointer; border-radius: 14px; background: transparent; font-weight: 700; color: rgba(255,255,255,0.5); transition: 0.3s; }
-        .mode-btn.active { background: var(--tab-color); color: white; }
+        .mode-select { display: flex; gap: 8px; margin-bottom: 25px; background: rgba(0,0,0,0.2); padding: 6px; border-radius: 18px; }
+        .mode-btn { flex: 1; font-size: 0.75rem; padding: 12px; border: none; cursor: pointer; border-radius: 14px; background: transparent; font-weight: 800; color: rgba(255,255,255,0.6); transition: 0.3s; }
+        .mode-btn.active { background: var(--tab-color); color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         
         #display-word { 
-            font-size: 2.6rem; font-weight: 800; margin: 1.2rem 0; min-height: 4.5rem; 
-            text-shadow: 0 2px 8px rgba(0,0,0,0.3); color: #ffffff;
+            font-size: 2.5rem; font-weight: 900; margin: 1.2rem 0; min-height: 4.5rem; 
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3); color: #ffffff;
             display: flex; align-items: center; justify-content: center; 
+            line-height: 1.1;
         }
 
-        #feedback { font-size: 1.1rem; height: 1.6rem; margin-bottom: 15px; font-weight: 700; }
+        #feedback { font-size: 1.2rem; height: 1.8rem; margin-bottom: 15px; font-weight: 800; }
         
         input { 
             width: 100%; padding: 18px; border: none; border-radius: 20px; 
-            font-size: 1.3rem; outline: none; margin-bottom: 20px; 
+            font-size: 1.4rem; outline: none; margin-bottom: 20px; 
             text-align: center; background: #ffffff; color: #1e293b; 
-            box-sizing: border-box; transition: 0.3s; font-weight: 600;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+            box-sizing: border-box; transition: 0.3s; font-weight: 700;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+            text-transform: lowercase; 
         }
 
         .controls { display: flex; gap: 15px; }
-        .btn-next { flex: 4; background: var(--tab-color); color: white; border: none; padding: 18px; border-radius: 20px; font-size: 1.2rem; font-weight: 800; cursor: pointer; }
-        .btn-audio { flex: 1; background: rgba(255,255,255,0.2); border-radius: 20px; border: 1px solid var(--glass-border); cursor: pointer; font-size: 1.6rem; color: white; display: flex; align-items: center; justify-content: center; }
+        .btn-next { flex: 4; background: var(--tab-color); color: white; border: none; padding: 18px; border-radius: 20px; font-size: 1.3rem; font-weight: 800; cursor: pointer; }
+        .btn-audio { flex: 1; background: rgba(255,255,255,0.25); border-radius: 20px; border: 1px solid var(--glass-border); cursor: pointer; font-size: 1.8rem; color: white; display: flex; align-items: center; justify-content: center; }
         
-        .footer { margin-top: 35px; font-size: 0.85rem; color: #ffffff; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+        .footer { margin-top: 35px; font-size: 0.9rem; color: #ffffff; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; opacity: 0.9; }
         canvas#fw { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
         
         #finale { display: none; padding: 20px 0; }
-        .medal { font-size: 5.5rem; display: block; }
+        .medal { font-size: 6rem; display: block; filter: drop-shadow(0 0 15px gold); }
 
-        .glow-correct { box-shadow: 0 0 45px #10b981 !important; }
-        .glow-wrong { box-shadow: 0 0 45px #ef4444 !important; }
+        .glow-correct { box-shadow: 0 0 50px #10b981 !important; transform: scale(1.02); }
+        .glow-wrong { box-shadow: 0 0 50px #ef4444 !important; transform: translateX(5px); }
     </style>
 </head>
 <body>
@@ -85,7 +88,8 @@
         </div>
         <div id="display-word">Lade...</div>
         <div id="feedback"></div>
-        <input type="text" id="in" placeholder="Antwort..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <input type="text" id="in" placeholder="Antwort..." 
+               autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <div class="controls">
             <button class="btn-next" onclick="check()">PRÜFEN</button>
             <button class="btn-audio" onclick="play()">🔊</button>
@@ -103,8 +107,11 @@
 </div>
 
 <script>
+    // ############################################################
+    // RECHTSCHREIB-GEPRÜFTE VOKABEL-LISTE
+    // ############################################################
     const raw = [
-        {en:"to reach", de:"erreichen"}, {en:"to colonize", de:"kolonisieren"}, {en:"colony", de:"Kolonie"}, {en:"independent", de:"unabhängig"}, {en:"to sail", de:"segeln"}, {en:"passenger", de:"Passagier; Passagierin"}, {en:"pilgrim", de:"Pilger; Pilgerin; Pilger-"}, {en:"journey", de:"Fahrt; Reise"}, {en:"religious", de:"religios; gläubig; Religions-"}, {en:"freedom", de:"Freiheit; Unabhangigkeit"}, {en:"after", de:"danach; spater"}, {en:"slave", de:"Sklave; Sklavin"}, {en:"plantation", de:"Plantage"}, {en:"slavery", de:"Sklaverei"}, {en:"to abolish", de:"abschaffen"}, {en:"civil war", de:"Bürgerkrieg"}, {en:"to lead", de:"führen; anführen; leiten"}, {en:"bloody", de:"blutig"}, {en:"discrimination", de:"Diskriminierung"}, {en:"equality", de:"Gleichberechtigung"}, {en:"election", de:"Wahl"}, {en:"exhausted", de:"erschöpft"}, {en:"thank God", de:"Gott sei Dank"}, {en:"bracelet", de:"Armband"}, {en:"to shake", de:"schütteln; beben; zittern"}, {en:"halfway", de:"auf halber Strecke; in der Mitte"}, {en:"seasick", de:"seekrank"}, {en:"to taste", de:"schmecken"}, {en:"vinegar", de:"Essig"}, {en:"granddaughter", de:"Enkelin"}, {en:"sooner", de:"früher"}, {en:"length", de:"Lange; Dauer"}, {en:"wagon", de:"Waggon; Planwagen"}, {en:"to pull", de:"ziehen"}, {en:"to panic", de:"panisch werden"}, {en:"to calm", de:"beruhigen"}, {en:"exhausting", de:"anstrengend"}, {en:"Indian", de:"Indianer; Indianerin; indianisch"}, {en:"weak", de:"schwach"}, {en:"to run out of", de:"ausgehen"}, {en:"to be cold", de:"frieren"}, {en:"furniture", de:"Möbel"}, {en:"Russia", de:"Russland"}, {en:"Greece", de:"Griechenland"}, {en:"Italy", de:"Italien"}, {en:"Russian", de:"russisch; Russisch; aus Russland; Russe; Russin"}, {en:"Greek", de:"griechisch; Griechisch; aus Griechenland; Grieche; Griechin"}, {en:"Polish", de:"polnisch; aus Polen"}, {en:"Austrian", de:"österreichisch; Österreichisch; aus Österreich; Österreicher; Österreicherin"}, {en:"French", de:"franzosisch; aus Frankreich"}, {en:"blanket", de:"Decke; Bettdecke; Wolldecke"}, {en:"path", de:"Pfad; Weg"}, {en:"to continue", de:"andauern; weitergehen, weitermachen; fortsetzen"}, {en:"edge", de:"Rand; Kante; Vorsprung"}, {en:"American", de:"amerikanisch; Amerikaner; Amerikanerin"}, {en:"Canadian", de:"kanadisch; Kanadier, Kanadierin"}, {en:"Puerto Rican", de:"puertorikanisch; Puertorikaner; Puertorikanerin"}, {en:"Cuban", de:"kubanisch; Kubaner; Kubanerin"}, {en:"Russian", de:"russisch; Russe; Russin"}, {en:"Polish", de:"polnisch"}, {en:"Irish", de:"irisch"}, {en:"British", de:"britisch"}, {en:"German", de:"deutsch; Deutscher; Deutsche"}, {en:"Austrian", de:"österreichisch; Österreicher; Österreicherin"}, {en:"Swiss", de:"schweizerisch; Schweizer; Schweizerin"}, {en:"French", de:"französisch"}, {en:"Italian", de:"italienisch; Italiener, Italienerin"}, {en:"Spanish", de:"spanisch"}, {en:"Greek", de:"griechisch; Grieche; Griechin"}, {en:"Vietnamese", de:"vietnamesisch; Vietnamese; Vietnamesin"}, {en:"Japanese", de:"japanisch; Japaner; Japanerin"}, {en:"Australian", de:"australisch; Australier; Australierin"}, {en:"feather", de:"Feder"}, {en:"fisherman", de:"Fischer"}, {en:"buffalo", de:"Büffel"}, {en:"tepee", de:"Tipi"}, {en:"impact", de:"Einfluss; Auswirkung"}, {en:"reservation", de:"Reservat; Reservierung"}, {en:"not ... either", de:"auch nicht"}, {en:"silver", de:"Silber"}, {en:"beadwork", de:"Perlenkunst"}, {en:"dream catcher", de:"Traumfänger"}, {en:"turquoise", de:"Türkis-; türkis"}, {en:"drumming", de:"Trommel-"}, {en:"ceremony", de:"Zeremonie"}, {en:"guidebook", de:"Reiseführer"}, {en:"to bring to life", de:"zum Leben erwecken; veranschaulichen"}, {en:"period", de:"Periode; Zeitspanne"}, {en:"to focus", de:"sich konzentrieren"}, {en:"to grow up", de:"aufwachsen"}, {en:"to learn", de:"erfahren; herausfinden"}, {en:"ritual", de:"Ritual"}, {en:"description", de:"Beschreibung"}, {en:"to experience", de:"erleben; erfahren"}, {en:"to relate to", de:"nochempfinden"}, {en:"sudden", de:"unerwartet; plotzlich"}, {en:"brutal", de:"brutal"}, {en:"to capture", de:"ergreifen; erobem; einfangen"}, {en:"trader", de:"Händler; Handlerin"}, {en:"to transport", de:"transportieren; befordem"}, {en:"section", de:"Abschnitt"}, {en:"horrible", de:"schrecklich; furchtbar"}, {en:"to treat", de:"behandeln"}, {en:"sorrow", de:"Kummer; Betrübnis; Leid"}, {en:"emotion", de:"Gefühl; Emotion"}, {en:"to go through", de:"durchmachen; durchgehen"}, {en:"descendant", de:"Abkömmling: Nachfahre; Nachfahrin"}, {en:"ancestor", de:"Vorfahre; Vorfahrin"}, {en:"contribution", de:"Beitrag; Beteiligung"}, {en:"regular", de:"regelmäßig"}, {en:"violent", de:"brutal; gewaltsam; gewalttätig"}, {en:"force", de:"Kraft; Gewalt; Stärke; Zwang"}, {en:"to inherit", de:"erben"}, {en:"family tree", de:"Familienstammbaum"}, {en:"diagram", de:"Diagramm"}, {en:"relationship", de:"Beziehung"}, {en:"generation", de:"Generation"}, {en:"to take after sb", de:"jmdm. nachschlagen; nach jmdm. kommen"}, {en:"orphan", de:"Waise; Waisenkind"}, {en:"to adopt", de:"übemehmen; annehmen; adoptieren"}, {en:"to judge", de:"beurteilen; bewerten"}, {en:"cover", de:"Cover; Titelblatt"}, {en:"blood", de:"Blut"}, {en:"to repeat", de:"wiederholen"}, {en:"series", de:"Serie"}, {en:"fiction", de:"Erzohlliteratur, Fiktion"}, {en:"bestseller", de:"Bestseller; Kassenschlager"}, {en:"serious", de:"schwer; emst"}, {en:"segregation", de:"Rassentrennung; Trennung"}, {en:"segregated", de:"getrennt"}, {en:"separate", de:"getrennt; separat; verschieden"}, {en:"seat", de:"Sitzplatz; Platz"}, {en:"at the front of", de:"vorn; im vorderen Teil"}, {en:"at the back of", de:"hinten; am Ende; im hinteren Teil"}, {en:"unjust", de:"ungerecht"}, {en:"unfair", de:"unfair"}, {en:"full", de:"voll; ganz; vollständig"}, {en:"further", de:"weiter"}, {en:"officer", de:"Beamter; Beamtin"}, {en:"to refuse", de:"sich weigem; ablehnen"}, {en:"fare", de:"Fahrpreis"}, {en:"to drag", de:"schleppen; schleifen; ziehen"}, {en:"off", de:"von ... weg; weg"}, {en:"to be arrested", de:"festgenommen werden; verhaftet werden"}, {en:"shotgun", de:"Schrotflinte; Jagdgewehr"}, {en:"to impress", de:"beeindrucken"}, {en:"courage", de:"Mut; Tapferkeit; Courage"}, {en:"protest", de:"Protest; Demonstration"}, {en:"star witness", de:"Kronzeuge; Kronzeugin"}, {en:"court case", de:"Gerichtsverhandlung: Rechtsfall"}, {en:"reputation", de:"Ruf; Ansehen"}, {en:"to connect", de:"verbinden"}, {en:"exactly", de:"genau"}, {en:"role", de:"Rolle"}
+        {en:"to reach", de:"erreichen"}, {en:"to colonize", de:"kolonisieren"}, {en:"colony", de:"Kolonie"}, {en:"independent", de:"unabhängig"}, {en:"to sail", de:"segeln"}, {en:"passenger", de:"Passagier; Passagierin"}, {en:"pilgrim", de:"Pilger; Pilgerin; Pilger-"}, {en:"journey", de:"Fahrt; Reise"}, {en:"religious", de:"religiös; gläubig; Religions-"}, {en:"freedom", de:"Freiheit; Unabhängigkeit"}, {en:"after", de:"danach; später"}, {en:"slave", de:"Sklave; Sklavin"}, {en:"plantation", de:"Plantage"}, {en:"slavery", de:"Sklaverei"}, {en:"to abolish", de:"abschaffen"}, {en:"civil war", de:"Bürgerkrieg"}, {en:"to lead", de:"führen; anführen; leiten"}, {en:"bloody", de:"blutig"}, {en:"discrimination", de:"Diskriminierung"}, {en:"equality", de:"Gleichberechtigung"}, {en:"election", de:"Wahl"}, {en:"exhausted", de:"erschöpft"}, {en:"thank God", de:"Gott sei Dank"}, {en:"bracelet", de:"Armband"}, {en:"to shake", de:"schütteln; beben; zittern"}, {en:"halfway", de:"auf halber Strecke; in der Mitte"}, {en:"seasick", de:"seekrank"}, {en:"to taste", de:"schmecken"}, {en:"vinegar", de:"Essig"}, {en:"granddaughter", de:"Enkelin"}, {en:"sooner", de:"früher"}, {en:"length", de:"Länge; Dauer"}, {en:"wagon", de:"Waggon; Planwagen"}, {en:"to pull", de:"ziehen"}, {en:"to panic", de:"panisch werden"}, {en:"to calm", de:"beruhigen"}, {en:"exhausting", de:"anstrengend"}, {en:"Indian", de:"Indianer; Indianerin; indianisch"}, {en:"weak", de:"schwach"}, {en:"to run out of", de:"ausgehen"}, {en:"to be cold", de:"frieren"}, {en:"furniture", de:"Möbel"}, {en:"Russia", de:"Russland"}, {en:"Greece", de:"Griechenland"}, {en:"Italy", de:"Italien"}, {en:"Russian", de:"russisch; Russisch; aus Russland; Russe; Russin"}, {en:"Greek", de:"griechisch; Griechisch; aus Griechenland; Grieche; Griechin"}, {en:"Polish", de:"polnisch; aus Polen"}, {en:"Austrian", de:"österreichisch; Österreichisch; aus Österreich; Österreicher; Österreicherin"}, {en:"French", de:"französisch; aus Frankreich"}, {en:"blanket", de:"Decke; Bettdecke; Wolldecke"}, {en:"path", de:"Pfad; Weg"}, {en:"to continue", de:"andauern; weitergehen; weitermachen; fortsetzen"}, {en:"edge", de:"Rand; Kante; Vorsprung"}, {en:"American", de:"amerikanisch; Amerikaner; Amerikanerin"}, {en:"Canadian", de:"kanadisch; Kanadier; Kanadierin"}, {en:"Puerto Rican", de:"puertorikanisch; Puertorikaner; Puertorikanerin"}, {en:"Cuban", de:"kubanisch; Kubaner; Kubanerin"}, {en:"Irish", de:"irisch"}, {en:"British", de:"britisch"}, {en:"German", de:"deutsch; Deutscher; Deutsche"}, {en:"Swiss", de:"schweizerisch; Schweizer; Schweizerin"}, {en:"Italian", de:"italienisch; Italiener; Italienerin"}, {en:"Spanish", de:"spanisch"}, {en:"Vietnamese", de:"vietnamesisch; Vietnamese; Vietnamesin"}, {en:"Japanese", de:"japanisch; Japaner; Japanerin"}, {en:"Australian", de:"australisch; Australier; Australierin"}, {en:"feather", de:"Feder"}, {en:"fisherman", de:"Fischer"}, {en:"buffalo", de:"Büffel"}, {en:"tepee", de:"Tipi"}, {en:"impact", de:"Einfluss; Auswirkung"}, {en:"reservation", de:"Reservat; Reservierung"}, {en:"not ... either", de:"auch nicht"}, {en:"silver", de:"Silber"}, {en:"beadwork", de:"Perlenkunst"}, {en:"dream catcher", de:"Traumfänger"}, {en:"turquoise", de:"Türkis-; türkis"}, {en:"drumming", de:"Trommel-"}, {en:"ceremony", de:"Zeremonie"}, {en:"guidebook", de:"Reiseführer"}, {en:"to bring to life", de:"zum Leben erwecken; veranschaulichen"}, {en:"period", de:"Periode; Zeitspanne"}, {en:"to focus", de:"sich konzentrieren"}, {en:"to grow up", de:"aufwachsen"}, {en:"to learn", de:"erfahren; herausfinden"}, {en:"ritual", de:"Ritual"}, {en:"description", de:"Beschreibung"}, {en:"to experience", de:"erleben; erfahren"}, {en:"to relate to", de:"nochempfinden"}, {en:"sudden", de:"unerwartet; plötzlich"}, {en:"brutal", de:"brutal"}, {en:"to capture", de:"ergreifen; erobern; einfangen"}, {en:"trader", de:"Händler; Händlerin"}, {en:"to transport", de:"transportieren; befördern"}, {en:"section", de:"Abschnitt"}, {en:"horrible", de:"schrecklich; furchtbar"}, {en:"to treat", de:"behandeln"}, {en:"sorrow", de:"Kummer; Betrübnis; Leid"}, {en:"emotion", de:"Gefühl; Emotion"}, {en:"to go through", de:"durchmachen; durchgehen"}, {en:"descendant", de:"Abkömmling; Nachfahre; Nachfahrin"}, {en:"ancestor", de:"Vorfahre; Vorfahrin"}, {en:"contribution", de:"Beitrag; Beteiligung"}, {en:"regular", de:"regelmäßig"}, {en:"violent", de:"brutal; gewaltsam; gewalttätig"}, {en:"force", de:"Kraft; Gewalt; Stärke; Zwang"}, {en:"to inherit", de:"erben"}, {en:"family tree", de:"Familienstammbaum"}, {en:"diagram", de:"Diagramm"}, {en:"relationship", de:"Beziehung"}, {en:"generation", de:"Generation"}, {en:"to take after sb", de:"jmdm. nachschlagen; nach jmdm. kommen"}, {en:"orphan", de:"Waise; Waisenkind"}, {en:"to adopt", de:"übernehmen; annehmen; adoptieren"}, {en:"to judge", de:"beurteilen; bewerten"}, {en:"cover", de:"Cover; Titelblatt"}, {en:"blood", de:"Blut"}, {en:"to repeat", de:"wiederholen"}, {en:"series", de:"Serie"}, {en:"fiction", de:"Erzählliteratur; Fiktion"}, {en:"bestseller", de:"Bestseller; Kassenschlager"}, {en:"serious", de:"schwer; ernst"}, {en:"segregation", de:"Rassentrennung; Trennung"}, {en:"segregated", de:"getrennt"}, {en:"separate", de:"getrennt; separat; verschieden"}, {en:"seat", de:"Sitzplatz; Platz"}, {en:"at the front of", de:"vorn; im vorderen Teil"}, {en:"at the back of", de:"hinten; am Ende; im hinteren Teil"}, {en:"unjust", de:"ungerecht"}, {en:"unfair", de:"unfair"}, {en:"full", de:"voll; ganz; vollständig"}, {en:"further", de:"weiter"}, {en:"officer", de:"Beamter; Beamtin"}, {en:"to refuse", de:"sich weigern; ablehnen"}, {en:"fare", de:"Fahrpreis"}, {en:"to drag", de:"schleppen; schleifen; ziehen"}, {en:"off", de:"von ... weg; weg"}, {en:"to be arrested", de:"festgenommen werden; verhaftet werden"}, {en:"shotgun", de:"Schrotflinte; Jagdgewehr"}, {en:"to impress", de:"beeindrucken"}, {en:"courage", de:"Mut; Tapferkeit; Courage"}, {en:"protest", de:"Protest; Demonstration"}, {en:"star witness", de:"Kronzeuge; Kronzeugin"}, {en:"court case", de:"Gerichtsverhandlung; Rechtsfall"}, {en:"reputation", de:"Ruf; Ansehen"}, {en:"to connect", de:"verbinden"}, {en:"exactly", de:"genau"}, {en:"role", de:"Rolle"}
     ];
 
     let pool = [...raw]; let total = raw.length; let cur = null; 
@@ -120,7 +127,7 @@
 
     function play() {
         if (!cur) return;
-        const key = cur.en.toLowerCase().replace(/[?!.,]/g, "").trim();
+        const key = cur.en.toLowerCase().replace(/[?!.,']/g, "").trim();
         if (typeof MASTER_ETTL_AUDIO !== 'undefined' && MASTER_ETTL_AUDIO[key]) {
             if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             new Audio("data:audio/mp3;base64," + MASTER_ETTL_AUDIO[key]).play();
@@ -144,7 +151,7 @@
         if (mode === 'EN_DE') document.getElementById('display-word').innerText = cur.en;
         else if (mode === 'DE_EN') document.getElementById('display-word').innerText = cur.de;
         else { document.getElementById('display-word').innerText = "🔊 Listen..."; play(); }
-        setTimeout(() => document.getElementById('in').focus(), 50);
+        setTimeout(() => document.getElementById('in').focus(), 100);
     }
 
     function check() {
@@ -156,16 +163,16 @@
 
         function normalize(s) {
             return s.toLowerCase()
-                    .replace(/[’´`]/g, "'") // Apostrophe vereinheitlichen, NICHT löschen
-                    .replace(/^to\s+/i, "") // "to " am Anfang ignorieren
-                    .replace(/[?!.,]/g, "") // Andere Satzzeichen ignorieren
+                    .replace(/[’´`]/g, "'") 
+                    .replace(/ae/g, "ä").replace(/oe/g, "ö").replace(/ue/g, "ü").replace(/ss/g, "ß")
+                    .replace(/^to\s+/i, "") 
+                    .replace(/[?!.,]/g, "") 
                     .trim();
         }
 
         let userVal = normalize(inputVal);
         let targets = target.split(";").map(s => normalize(s));
         
-        // BE / AE Logik
         let isCorrect = targets.some(t => {
             if (userVal === t) return true;
             let alt = t.replace(/or$/, "our").replace(/our$/, "or").replace(/re$/, "er").replace(/er$/, "re").replace(/ize$/, "ise").replace(/ise$/, "ize");
